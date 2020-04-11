@@ -16,7 +16,7 @@ def testRoll(n = 10):
         result = result + str(rollDie())
     print(result)
 
-#testRoll(5)
+testRoll(5)
 
 random.seed(0)
 
