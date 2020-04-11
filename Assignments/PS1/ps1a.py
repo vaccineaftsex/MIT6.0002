@@ -25,7 +25,14 @@ def load_cows(filename):
     a dictionary of cow name (string), weight (int) pairs
     """
     # TODO: Your code here
-    pass
+    data = open(filename, 'r')
+    cow_dict = {}
+    for line in data:
+        (cow_name, cow_weight) = tuple(line.strip().split(","))
+        cow_dict[cow_name]= int(cow_weight)
+    return cow_dict
+
+
 
 # Problem 2
 def greedy_cow_transport(cows,limit=10):
@@ -51,9 +58,45 @@ def greedy_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    sorted_cows = sorted(cows, key = cows.get)
+    trip_list = []
+    while sorted_cows != []:
+        available_weight = limit
+        cow_list = []
+        while sorted_cows != []:
+            new_cow = sorted_cows.pop()
+            if available_weight - cows[new_cow] >= 0:
+                cow_list.append(new_cow)
+                available_weight -= cows[new_cow]
+            else:
+                sorted_cows.append(new_cow)
+                break
+        trip_list.append(cow_list)
+    return trip_list
+
+#cows = load_cows("ps1_cow_data.txt")
+#print(cows)
+#print(greedy_cow_transport(cows))
+
 
 # Problem 3
+    
+def test_partition(cows, partition, limit):
+    """
+    Helper function for brute_force_cow_transport. Return whether the allocation given 
+    by the partition obeys the weight limitation
+    """
+    for trip in partition:
+        total_weight = 0
+        for i in range(len(trip)):
+            total_weight += cows[trip[i]]
+            if total_weight > limit:
+                break
+        if total_weight > limit:
+            return False
+    return True
+
+
 def brute_force_cow_transport(cows,limit=10):
     """
     Finds the allocation of cows that minimizes the number of spaceship trips
@@ -76,8 +119,26 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    doable_partition = []
+    length_partition = {}   # dict that maps index of partition in doable_partition -> number of trips
+    for partition in get_partitions(cows.keys()):
+        if test_partition(cows, partition, limit):
+            doable_partition.append(partition)
+            length_partition[len(doable_partition)] = len(partition)
+    return(doable_partition[min(length_partition, key = length_partition.get)])
         
+##test1
+#cows = {"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}
+#print(brute_force_cow_transport(cows))
+#
+##test 2                
+#cows = load_cows("ps1_cow_data.txt")
+#print(brute_force_cow_transport(cows))
+#
+
+
+
+
 # Problem 4
 def compare_cow_transport_algorithms():
     """
@@ -93,4 +154,20 @@ def compare_cow_transport_algorithms():
     Does not return anything.
     """
     # TODO: Your code here
-    pass
+    cows = load_cows("ps1_cow_data.txt")
+    
+    print("Greedy algorithm")
+    start = time.time()
+    best_greedy = greedy_cow_transport(cows)
+    end = time.time()
+    print("time taken:", end - start, 's')
+    print("number of trips:", len(best_greedy),'\n')
+
+    print("Brute-force algorithm")
+    start = time.time()
+    best_bruteforce = brute_force_cow_transport(cows)
+    end = time.time()
+    print("time taken:", end - start, 's')
+    print("number of trips:", len(best_bruteforce))
+    
+compare_cow_transport_algorithms()
