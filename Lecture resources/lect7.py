@@ -18,40 +18,40 @@ pylab.rcParams['ytick.major.size'] = 7
 #set numpoints for legend
 pylab.rcParams['legend.numpoints'] = 1
 
-class FairRoulette():
-    def __init__(self):
-        self.pockets = []
-        for i in range(1,37):
-            self.pockets.append(i)
-        self.ball = None
-        self.pocketOdds = len(self.pockets) - 1
-    def spin(self):
-        self.ball = random.choice(self.pockets)
-    def betPocket(self, pocket, amt):
-        if str(pocket) == str(self.ball):
-            return amt*self.pocketOdds
-        else: return -amt
-    def __str__(self):
-        return 'Fair Roulette'
-
-def playRoulette(game, numSpins, pocket, bet, toPrint):
-    totPocket = 0
-    for i in range(numSpins):
-        game.spin()
-        totPocket += game.betPocket(pocket, bet)
-    if toPrint:
-        print(numSpins, 'spins of', game)
-        print('Expected return betting', pocket, '=',\
-              str(100*totPocket/numSpins) + '%\n')
-    return (totPocket/numSpins)
-        
-def findPocketReturn(game, numTrials, trialSize, toPrint):
-    pocketReturns = []
-    for t in range(numTrials):
-        trialVals = playRoulette(game, trialSize, 2, 1, toPrint)
-        pocketReturns.append(trialVals)
-    return pocketReturns
-
+#class FairRoulette():
+#    def __init__(self):
+#        self.pockets = []
+#        for i in range(1,37):
+#            self.pockets.append(i)
+#        self.ball = None
+#        self.pocketOdds = len(self.pockets) - 1
+#    def spin(self):
+#        self.ball = random.choice(self.pockets)
+#    def betPocket(self, pocket, amt):
+#        if str(pocket) == str(self.ball):
+#            return amt*self.pocketOdds
+#        else: return -amt
+#    def __str__(self):
+#        return 'Fair Roulette'
+#
+#def playRoulette(game, numSpins, pocket, bet, toPrint):
+#    totPocket = 0
+#    for i in range(numSpins):
+#        game.spin()
+#        totPocket += game.betPocket(pocket, bet)
+#    if toPrint:
+#        print(numSpins, 'spins of', game)
+#        print('Expected return betting', pocket, '=',\
+#              str(100*totPocket/numSpins) + '%\n')
+#    return (totPocket/numSpins)
+#        
+#def findPocketReturn(game, numTrials, trialSize, toPrint):
+#    pocketReturns = []
+#    for t in range(numTrials):
+#        trialVals = playRoulette(game, trialSize, 2, 1, toPrint)
+#        pocketReturns.append(trialVals)
+#    return pocketReturns
+#
 def getMeanAndStd(X):
     mean = sum(X)/float(len(X))
     tot = 0.0
@@ -71,7 +71,7 @@ def getMeanAndStd(X):
 #               weights = [1/numSamples]*len(dist))
 #               
 #print('Fraction within ~200 of mean =',
-#      sum(v[0][30:70]))
+#      len(v[0]))
 #
 #def gaussian(x, mu, sigma):
 #  factor1 = (1.0/(sigma*((2*pylab.pi)**0.5)))
@@ -88,26 +88,26 @@ def getMeanAndStd(X):
 #pylab.plot(xVals, yVals)
 #pylab.title('Normal Distribution, mu = ' + str(mu)\
 #            + ', sigma = ' + str(sigma))
+
+
+#import scipy.integrate
 #
-
-import scipy.integrate
-
-def checkEmpirical(numTrials):
-  for t in range(numTrials):
-     mu = random.randint(-10, 10)
-     sigma = random.randint(1, 10)
-     print('For mu =', mu, 'and sigma =', sigma)
-     for numStd in (1, 1.96, 3):
-        area = scipy.integrate.quad(gaussian,
-                                    mu-numStd*sigma,
-                                    mu+numStd*sigma,
-                                    (mu, sigma))[0]
-        print(' Fraction within', numStd,
-              'std =', round(area, 4))
+#def checkEmpirical(numTrials):
+#  for t in range(numTrials):
+#     mu = random.randint(-10, 10)
+#     sigma = random.randint(1, 10)
+#     print('For mu =', mu, 'and sigma =', sigma)
+#     for numStd in (1, 1.96, 3):
+#        area = scipy.integrate.quad(gaussian,
+#                                    mu-numStd*sigma,
+#                                    mu+numStd*sigma,
+#                                    (mu, sigma))[0]
+#        print(' Fraction within', numStd,
+#              'std =', round(area, 4))
         
 #checkEmpirical(3)
 
-##Test CLT
+#Test CLT
 #def plotMeans(numDice, numRolls, numBins, legend, color, style):
 #    means = []
 #    for i in range(numRolls//numDice):
