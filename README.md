@@ -8,4 +8,4 @@ MIT 6.0002 Introduction to Computational Thinking and Data Science
 * This repository contains the following:
   * [Lecture slides and code (downloaded from website without change)](https://github.com/vaccineaftsex/MIT6.0002/tree/master/Lecture%20resources)
   * [My personal notes on the course](https://github.com/vaccineaftsex/MIT6.0002/tree/master/My%20notes)
-  * [My attempt on the problem sets (all tested)](https://github.com/vaccineaftsex/MIT6.0002/tree/master/Assignments
+  * [My attempt on the problem sets (all tested)](https://github.com/vaccineaftsex/MIT6.0002/tree/master/Assignments)
